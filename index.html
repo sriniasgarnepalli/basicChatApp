@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat application</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      function setUsername() {
+        username = document.getElementById("username").value;
+        document.getElementById("username-form").style.display = "none"; // Hide username input
+        document.getElementById("chat").style.display = "block"; // Show chat area
+      }
+
+      function sendMessage() {
+        const msg = document.getElementById("message").value;
+        if (msg.trim() === "") {
+          return false; // Prevent sending empty messages
+        }
+        socket.emit("chat message", { user: username, message: msg }); // Emit the message
+        document.getElementById("message").value = ""; // Clear the input
+        return false; // Prevent form submission
+      }
+
+      socket.on("connect", () => {
+        console.log("Connected to the server");
+      });
+
+      socket.on("chat message", ({ user, message }) => {
+        const item = document.createElement("li");
+        item.textContent = `${user}: ${message}`;
+        document.getElementById("messages").appendChild(item);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="username-form">
+      <input
+        id="username"
+        type="text"
+        placeholder="Enter your username"
+        required
+      />
+      <button onclick="setUsername()">Set Username</button>
+    </div>
+
+    <div id="chat" style="display: none">
+      <ul id="messages"></ul>
+      <form onsubmit="return sendMessage();">
+        <input
+          id="message"
+          type="text"
+          placeholder="Enter your message..."
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </body>
+</html>
