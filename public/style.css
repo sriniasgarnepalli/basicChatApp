@@ -1,0 +1,37 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#messages {
+  list-style-type: none;
+  padding: 0;
+}
+
+#messages li {
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.my-message {
+  background-color: #d1f5d1; /* Light green for my messages */
+  text-align: right; /* Align to the right */
+}
+
+.disconnected-message {
+  background-color: #ff0000; /* Light green for my messages */
+  text-align: right; /* Align to the right */
+}
+
+.other-message {
+  background-color: #f1f1f1; /* Light gray for others' messages */
+  text-align: left; /* Align to the left */
+}
