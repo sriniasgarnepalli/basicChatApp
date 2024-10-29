@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat application</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/index.js"></script>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div id="username-form">
+      <input
+        id="username"
+        type="text"
+        placeholder="Enter your username"
+        required
+      />
+      <button onclick="setUsername()">Set Username</button>
+    </div>
+
+    <div id="form" style="display: none">
+      <form onsubmit="return sendMessage();">
+        <input
+          id="message"
+          type="text"
+          placeholder="Enter your message..."
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+
+    <div class="container">
+      <div id="chat" style="display: none">
+        <ul id="messages"></ul>
+      </div>
+
+      <!-- <div id="user-message" style="display: none">
+        <ul id="sent-message"></ul>
+      </div> -->
+    </div>
+  </body>
+</html>
