@@ -22,14 +22,17 @@ io.on("connection", (socket) => {
   console.log("A user is connected");
 
   socket.on("set username", (username) => {
-    usernames[socket.id] = username; // Associate the username with the socket ID
+    usernames[socket.id] = username;
+    io.emit("chat message", { event: `${username} has joined the chat` }); // Associate the username with the socket ID
   });
 
   // Listen for messages from client
-  socket.on("chat message", ({ username, message }) => {
-    console.log(`Broadcasting message from ${username}: ${message}`); // Log the message being broadcast
+  socket.on("chat message", ({ username, message, timeStamp }) => {
+    console.log(
+      `Broadcasting message from ${username}: ${message} at ${timeStamp}`
+    ); // Log the message being broadcast
 
-    io.emit("chat message", { username, message }); // Emit message to all the connected clients
+    io.emit("chat message", { username, message, timeStamp }); // Emit message to all the connected clients
   });
 
   //   Handling user disconnect

@@ -28,10 +28,21 @@ body {
 
 .disconnected-message {
   background-color: #ff0000; /* Light green for my messages */
-  text-align: right; /* Align to the right */
+  text-align: center; /* Align to the right */
 }
 
 .other-message {
   background-color: #f1f1f1; /* Light gray for others' messages */
   text-align: left; /* Align to the left */
+}
+
+.user-joined {
+  background-color: #115cd4; /* Light green for my messages */
+  text-align: center;
+}
+
+.timestamp {
+  display: block; /* Makes the timestamp appear on a new line */
+  font-size: 0.8em; /* Smaller font size */
+  color: gray; /* Color for the timestamp */
 }

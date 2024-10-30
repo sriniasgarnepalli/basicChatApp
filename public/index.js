@@ -19,7 +19,12 @@ function sendMessage() {
   if (msg.trim() === "") {
     return false;
   }
-  socket.emit("chat message", { username: username, message: msg }); // Emit the message
+  const timestamp = new Date().toLocaleString();
+  socket.emit("chat message", {
+    username: username,
+    message: msg,
+    timeStamp: timestamp
+  }); // Emit the message
   document.getElementById("message").value = "";
 
   return false;
@@ -30,7 +35,6 @@ socket.on("connect", () => {
 });
 
 socket.on("chat message", function (data) {
-  console.log(data, "sss");
   if (data && data.username && data.message) {
     const item = document.createElement("li");
     item.textContent =
@@ -39,6 +43,23 @@ socket.on("chat message", function (data) {
         : `${data.username}: ${data.message}`;
     item.className =
       data.username === username ? "my-message" : "other-message"; // Class based on sender
+    item.setAttribute("data-timestamp", data.timeStamp);
+
+    // Add hover event to display timestamp
+    item.addEventListener("mouseover", function () {
+      const timeStamp = document.createElement("span");
+      timeStamp.textContent = data.timeStamp;
+      timeStamp.className = "timestamp"; // Add a class for styling
+      item.appendChild(timeStamp);
+    });
+
+    item.addEventListener("mouseout", function () {
+      const timeStamp = item.querySelector(".timestamp");
+      if (timeStamp) {
+        item.removeChild(timeStamp);
+      }
+    });
+
     document.getElementById("messages").appendChild(item);
 
     window.scrollTo(0, document.body.scrollHeight);
@@ -49,6 +70,14 @@ socket.on("chat message", function (data) {
         ? "User has disconnected"
         : `${data.username} has disconnected`;
     item.className = "disconnected-message";
+    document.getElementById("messages").appendChild(item);
+
+    window.scrollTo(0, document.body.scrollHeight);
+  } else if (data && data.event) {
+    console.log(data, "received");
+    const item = document.createElement("li");
+    item.textContent = data.event;
+    item.className = "user-joined";
     document.getElementById("messages").appendChild(item);
 
     window.scrollTo(0, document.body.scrollHeight);
