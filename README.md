@@ -9,3 +9,9 @@ broadcast-server connect - This command will connect the client to the server.
 When the server is started using the broadcast-server start command, it should listen for client connections on a specified port (you can configure that using command options or hardcode for simplicity). When a client connects and sends a message, the server should broadcast this message to all connected clients.
 
 The server should be able to handle multiple clients connecting and disconnecting gracefully.
+
+# Current Features
+- Message notifications
+- Notification for user joined and left the chat
+- Realtime messaging
+  
