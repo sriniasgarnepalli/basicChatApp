@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat application</title>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/index.js"></script>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
@@ -27,13 +27,15 @@
       preload="auto"
     ></audio>
     <div id="username-form">
-      <input
-        id="username"
-        type="text"
-        placeholder="Enter your username"
-        required
-      />
-      <button onclick="setUsername()">Set Username</button>
+      <form id="username-form">
+        <input
+          type="text"
+          id="username"
+          placeholder="Enter username"
+          required
+        />
+        <button type="submit">Set Username</button>
+      </form>
     </div>
 
     <div id="channel-form" style="display: none">
@@ -52,7 +54,7 @@
     </div>
 
     <div id="form" style="display: none">
-      <form onsubmit="return sendMessage();">
+      <form id="message-form">
         <input
           id="message"
           type="text"
@@ -68,5 +70,11 @@
         <ul id="messages"></ul>
       </div>
     </div>
+
+    <script type="module" src="index.js"></script>
+    <script type="module" src="username.js"></script>
+    <script type="module" src="chat.js"></script>
+    <script type="module" src="reaction.js"></script>
+    <script type="module" src="systemMessage.js"></script>
   </body>
 </html>

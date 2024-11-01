@@ -1,7 +1,8 @@
 import express from "express";
 import http from "http";
-import { disconnect } from "process";
 import { Server } from "socket.io";
+import path from "path";
+import { fileURLToPath } from "url";
 
 // Express application
 const app = express();
@@ -12,8 +13,16 @@ const server = http.createServer(app);
 // Setting up socket.io to work with the server
 const io = new Server(server);
 
-// Serving static files from the 'public' directory
-app.use(express.static("public"));
+// Get the current directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 const usernames = {}; // Store usernames by socket ID
 const messages = {}; // Store messages with reactions by message ID

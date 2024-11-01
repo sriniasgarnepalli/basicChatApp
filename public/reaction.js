@@ -3,12 +3,12 @@ export function renderReactions(reactions, messageId) {
   return emojis
     .map((emoji) => {
       const count = reactions[emoji] || 0;
-      return `<button onclick="addReaction('${messageId}', '${emoji}')">${emoji} ${count}</button>`;
+      return `<button class="reaction-button" data-reaction="${messageId},${emoji}">${emoji} ${count}</button>`;
     })
     .join(" ");
 }
 
-export function addReaction(messageId, emoji) {
+export function addReaction(socket, messageId, emoji) {
   socket.emit("add reaction", { messageId, emoji });
 }
 
@@ -18,3 +18,5 @@ export function updateReactions(messageId, reactions) {
     reactionsEl.innerHTML = renderReactions(reactions, messageId);
   }
 }
+
+window.addReaction = addReaction;
