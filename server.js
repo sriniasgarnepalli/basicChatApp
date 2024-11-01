@@ -16,6 +16,7 @@ const io = new Server(server);
 app.use(express.static("public"));
 
 const usernames = {}; // Store usernames by socket ID
+const messages = {}; // Store messages with reactions by message ID
 
 // Listening for connections from clients
 io.on("connection", (socket) => {
@@ -27,12 +28,41 @@ io.on("connection", (socket) => {
   });
 
   // Listen for messages from client
-  socket.on("chat message", ({ username, message, timeStamp }) => {
-    console.log(
-      `Broadcasting message from ${username}: ${message} at ${timeStamp}`
-    ); // Log the message being broadcast
+  socket.on("chat message", ({ username, messageId, message, timeStamp }) => {
+    // Store message with reactions initialized
+    messages[messageId] = { username, message, timeStamp, reactions: {} };
+    io.emit("chat message", {
+      username,
+      message,
+      timeStamp,
+      messageId,
+      reactions: {}
+    }); // Emit message to all the connected clients
+  });
 
-    io.emit("chat message", { username, message, timeStamp }); // Emit message to all the connected clients
+  socket.on("add reaction", ({ messageId, emoji }) => {
+    const userId = usernames[socket.id];
+    if (!messages[messageId]) return;
+
+    // Toggle reaction to add or remove
+    const userReactions = messages[messageId].reactions[emoji] || new Set();
+    if (userReactions.has(userId)) {
+      userReactions.delete(userId);
+    } else {
+      userReactions.add(userId);
+    }
+
+    messages[messageId].reactions[emoji] = userReactions;
+
+    io.emit("reaction updated", {
+      messageId,
+      reactions: Object.fromEntries(
+        Object.entries(messages[messageId].reactions).map(([emoji, users]) => [
+          emoji,
+          users.size
+        ])
+      )
+    });
   });
 
   //   Handling user disconnect

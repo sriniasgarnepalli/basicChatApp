@@ -42,7 +42,12 @@ body {
 }
 
 .timestamp {
-  display: block; /* Makes the timestamp appear on a new line */
   font-size: 0.8em; /* Smaller font size */
   color: gray; /* Color for the timestamp */
+}
+
+.reactions {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
 }
