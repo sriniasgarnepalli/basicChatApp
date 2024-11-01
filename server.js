@@ -4,6 +4,8 @@ import { Server } from "socket.io";
 import path from "path";
 import { fileURLToPath } from "url";
 
+let channels = {};
+
 // Express application
 const app = express();
 
@@ -47,6 +49,27 @@ io.on("connection", (socket) => {
       messageId,
       reactions: {}
     }); // Emit message to all the connected clients
+  });
+
+  socket.on("createChannel", (channelName) => {
+    if (!channels[channelName]) {
+      channels[channelName] = [];
+      console.log(`Channel created: ${channelName}`);
+    }
+  });
+
+  socket.on("joinChannel", (channelName) => {
+    if (channels[channelName]) {
+      channels[channelName].push(socket.id);
+      socket.join(channelName);
+      console.log(`User ${socket.id} joined channel: ${channelName}`);
+    } else {
+      socket.emit("error", { message: "Channel does not exist." });
+    }
+  });
+
+  socket.on("listChannels", () => {
+    socket.emit("activeChannels", Object.keys(channels));
   });
 
   socket.on("add reaction", ({ messageId, emoji }) => {
