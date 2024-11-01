@@ -14,7 +14,8 @@ The server should be able to handle multiple clients connecting and disconnectin
 - Message notifications
 - Notification for user joined and left the chat
 - Realtime messaging
+- Message reactions and emojis
   
 # Upcoming features
-- Message reactions and emojis
 - Search and Filtering
+- Connect and disconnect button to join a channel
