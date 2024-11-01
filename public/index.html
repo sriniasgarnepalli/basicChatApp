@@ -36,6 +36,21 @@
       <button onclick="setUsername()">Set Username</button>
     </div>
 
+    <div id="channel-form" style="display: none">
+      <h3>Available Channels</h3>
+      <ul id="channel-list"></ul>
+      <input id="new-channel" type="text" placeholder="Create a new channel" />
+      <button onclick="createChannel()">Create Channel</button>
+      <h3>Join a Channel</h3>
+      <input
+        id="channel"
+        type="text"
+        placeholder="Enter channel name"
+        required
+      />
+      <button onclick="joinChannel()">Join Channel</button>
+    </div>
+
     <div id="form" style="display: none">
       <form onsubmit="return sendMessage();">
         <input
@@ -52,10 +67,6 @@
       <div id="chat" style="display: none">
         <ul id="messages"></ul>
       </div>
-
-      <!-- <div id="user-message" style="display: none">
-        <ul id="sent-message"></ul>
-      </div> -->
     </div>
   </body>
 </html>
