@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     event.preventDefault();
     username = document.getElementById("username").value; // Capture the username
     // Prevent the default form submission
-    setUsername(socket); // Call the setUsername function
+    setUsername(socket, username); // Call the setUsername function
   });
 
   messageForm.addEventListener("submit", (event) => {

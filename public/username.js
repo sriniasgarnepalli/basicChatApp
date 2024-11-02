@@ -7,5 +7,6 @@ export function setUsername(socket) {
 
   socket.emit("set username", username);
   document.getElementById("usernameform").style.display = "none";
-  document.getElementById("channel-form").style.display = "block";
+  document.getElementById("form").style.display = "block";
+  document.getElementById("chat").style.display = "block";
 }
